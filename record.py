@@ -6,7 +6,7 @@ from pathlib import Path
 # Change the following three lines according to data collection needs.
 from readers.pzem016 import read_data, header_row
 fn = 'power.csv'
-sleep_time = 0.2
+sleep_time = 5.0
 
 # If output file doesn't exist, create it with a header row.
 full_fn = Path(__file__).parent / "data" / fn
