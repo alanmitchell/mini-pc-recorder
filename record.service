@@ -1,0 +1,14 @@
+[Unit]
+Description=Data Collection Script
+After=network.target
+
+[Service]
+Type=simple
+Restart=always
+RestartSec=5
+User=alan
+Group=alan
+ExecStart=/home/alan/mini-pc-recorder/.venv/bin/python /home/alan/mini-pc-recorder/record.py
+
+[Install]
+WantedBy=multi-user.target
