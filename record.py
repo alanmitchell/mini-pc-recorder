@@ -6,8 +6,15 @@ import importlib
 
 # Change the following three lines according to data collection needs.
 # Note that reader modules must have "header_row" and "read_data" methods.
+"""
+# PZEM-016 power sensor
 reader_module_name = "pzem016"
 fn = 'power.csv'
+sleep_time = 5.0
+"""
+# Reading 12VDC battery voltage through an MCP2221A board.
+reader_module_name = "bat_volts"
+fn = "battery.csv"
 sleep_time = 5.0
 
 # --------------------------- No Changes Needed below Here ------------------
