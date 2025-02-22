@@ -3,6 +3,8 @@
 import time
 from pathlib import Path
 import importlib
+import logging
+import logging.handlers
 
 # Change the following three lines according to data collection needs.
 # Note that reader modules must have "header_row" and "read_data" methods.
@@ -18,6 +20,36 @@ fn = "battery.csv"
 sleep_time = 60.0
 
 # --------------------------- No Changes Needed below Here ------------------
+
+def configure_logging():
+    """
+    Configures the logging for the application.
+    Logs will include timestamps, file names, line numbers, log levels, and messages.
+    Uses a rotating file handler with a size limit.
+    """
+
+    # Create a rotating file handler that rotates at 1 MB
+    # and keeps up to 5 backup log files.
+    log_path = Path(__file__).parent / "logs" / "errors.log"
+    rotating_file_handler = logging.handlers.RotatingFileHandler(
+        log_path, 
+        maxBytes=1024 * 1024,  # 1 MB
+        backupCount=5
+    )
+
+    # Define the format for the log messages
+    log_format = logging.Formatter(
+        "%(asctime)s [%(levelname)s] %(filename)s:%(lineno)d - %(message)s",
+        datefmt="%Y-%m-%d %H:%M:%S"
+    )
+    rotating_file_handler.setFormatter(log_format)
+
+    # Get the root logger and set its level
+    logger = logging.getLogger()
+    logger.setLevel(logging.INFO)
+    logger.addHandler(rotating_file_handler)
+
+configure_logging()
 
 reader_module = importlib.import_module(f"readers.{reader_module_name}")
 
@@ -36,6 +68,6 @@ while True:
                 fout.write(f"{data_line}\n")
 
     except Exception as e:
-        print(e)
+        logging.error("An error occurred: %s", e, exc_info=True)
 
     time.sleep(sleep_time)
