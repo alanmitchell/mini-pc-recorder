@@ -12,7 +12,7 @@ def header_row():
 
 def read_data():
     try:
-        bat_volts = battery_in.value * 3.3 / 65536
+        bat_volts = battery_in.value * 3.3 / 65536 * 5.695
         return f'{time.time():.0f},{bat_volts}'
     except Exception as e:
         return None
