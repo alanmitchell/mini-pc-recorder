@@ -15,7 +15,7 @@ sleep_time = 5.0
 # Reading 12VDC battery voltage through an MCP2221A board.
 reader_module_name = "bat_volts"
 fn = "battery.csv"
-sleep_time = 5.0
+sleep_time = 60.0
 
 # --------------------------- No Changes Needed below Here ------------------
 
