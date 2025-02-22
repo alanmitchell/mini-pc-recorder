@@ -8,6 +8,7 @@ Restart=always
 RestartSec=5
 User=alan
 Group=alan
+Environment="BLINKA_MCP2221=1"
 ExecStart=/home/alan/mini-pc-recorder/.venv/bin/python /home/alan/mini-pc-recorder/record.py
 
 [Install]

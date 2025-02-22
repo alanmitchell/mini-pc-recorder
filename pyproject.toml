@@ -5,5 +5,7 @@ description = "Data Collection and Recording Script"
 readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
+    "adafruit-blinka>=8.54.0",
+    "hidapi>=0.14.0.post4",
     "minimalmodbus>=2.1.1",
 ]
