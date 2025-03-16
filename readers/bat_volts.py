@@ -15,7 +15,7 @@ def read_data():
         bat_tot = 0.0
         for i in range(10):
             bat_tot += battery_in.value 
-        bat_volts = bat_tot / 10.0 * 3.3 / 65536 * 5.695
+        bat_volts = bat_tot / 10.0 * 3.3 / 65536 * 5.670
         return f'{time.time():.0f},{bat_volts}'
     except Exception as e:
         return None
