@@ -15,8 +15,8 @@ fn = 'power.csv'
 sleep_time = 5.0
 """
 # Reading 12VDC battery voltage through an MCP2221A board.
-reader_module_name = "bat_volts"
-fn = "battery.csv"
+reader_module_name = "pzem016"
+fn = "solar.csv"
 sleep_time = 1.0
 
 # --------------------------- No Changes Needed below Here ------------------
