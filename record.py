@@ -1,6 +1,7 @@
 """Main data reading and recording script.
 """
 import time
+from datetime import datetime
 from pathlib import Path
 import importlib
 import logging
@@ -8,16 +9,10 @@ import logging.handlers
 
 # Change the following three lines according to data collection needs.
 # Note that reader modules must have "header_row" and "read_data" methods.
-"""
-# PZEM-016 power sensor
-reader_module_name = "pzem016"
-fn = 'power.csv'
-sleep_time = 5.0
-"""
-# Reading 12VDC battery voltage through an MCP2221A board.
-reader_module_name = "pzem016"
-fn = "solar.csv"
-sleep_time = 1.0
+
+reader_module_name = "temp_board"
+fn_prefix = "temp-"
+sleep_time = 2.0
 
 # --------------------------- No Changes Needed below Here ------------------
 
@@ -53,10 +48,12 @@ configure_logging()
 
 reader_module = importlib.import_module(f"readers.{reader_module_name}")
 
-# Full path to the output file
-full_fn = Path(__file__).parent / "data" / fn
 
 while True:
+    # Full path to the output file
+    fn = f"{fn_prefix}{datetime.now().strftime('%Y-%m-%d')}.csv"
+    full_fn = Path(__file__).parent / "data" / fn
+
     # If output file doesn't exist, create it with a header row.
     if not full_fn.exists():
         with open(full_fn, 'w') as fout:

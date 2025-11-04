@@ -8,4 +8,5 @@ dependencies = [
     "adafruit-blinka>=8.54.0",
     "hidapi>=0.14.0.post4",
     "minimalmodbus>=2.1.1",
+    "pyfirmata2>=2.5.1",
 ]
