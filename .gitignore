@@ -1,3 +1,4 @@
+settings.py
 /data/*.csv
 /data/old/
 /logs/*.log*

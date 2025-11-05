@@ -7,14 +7,7 @@ import importlib
 import logging
 import logging.handlers
 
-# Change the following three lines according to data collection needs.
-# Note that reader modules must have "header_row" and "read_data" methods.
-
-reader_module_name = "temp_board"
-fn_prefix = "temp-"
-sleep_time = 2.0
-
-# --------------------------- No Changes Needed below Here ------------------
+import settings
 
 def configure_logging():
     """
@@ -46,20 +39,20 @@ def configure_logging():
 
 configure_logging()
 
-reader_module = importlib.import_module(f"readers.{reader_module_name}")
-
+reader_module = importlib.import_module(f"readers.{settings.READER_MODULE}")
+reader = reader_module.Reader(settings)
 
 while True:
     # Full path to the output file
-    fn = f"{fn_prefix}{datetime.now().strftime('%Y-%m-%d')}.csv"
+    fn = f"{settings.FILE_PREFIX}_{datetime.now().strftime('%Y-%m-%d')}.csv"
     full_fn = Path(__file__).parent / "data" / fn
 
     # If output file doesn't exist, create it with a header row.
     if not full_fn.exists():
         with open(full_fn, 'w') as fout:
-            fout.write(f"{reader_module.header_row()}\n")
+            fout.write(f"{reader.header_row()}\n")
     try:
-        data_line = reader_module.read_data()
+        data_line = reader.read_data()
         if data_line:
             with open(full_fn, 'a') as fout:
                 fout.write(f"{data_line}\n")
@@ -67,4 +60,4 @@ while True:
     except Exception as e:
         logging.error("An error occurred: %s", e, exc_info=True)
 
-    time.sleep(sleep_time)
+    time.sleep(settings.SLEEP_TIME)
