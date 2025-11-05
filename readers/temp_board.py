@@ -29,8 +29,8 @@ class TempSensor:
             lnR = math.log(resis)
             return (1.8 / (self.C1 + self.C2 * lnR + self.C3 * lnR ** 3)) - 459.67
         else:
-            # open connection
-            return -999.0
+            # no thermistor attached
+            return None
 
 class Reader:
 
@@ -45,5 +45,7 @@ class Reader:
         return "ts,temp0,temp1,temp2,temp3"
 
     def read_data(self):
-        sensors_str = ','.join([f'{self.sensors[i].temperature():.1f}' for i in range(4)])
+        vals = [s.temperature() for s in self.sensors]
+        vals_fmt = [f'{v:.1f}' if v is not None else '' for v in vals ]
+        sensors_str = ','.join(vals_fmt)
         return f'{time.time():.1f},{sensors_str}'
