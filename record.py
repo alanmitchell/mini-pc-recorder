@@ -42,6 +42,12 @@ configure_logging()
 reader_module = importlib.import_module(f"readers.{settings.READER_MODULE}")
 reader = reader_module.Reader(settings)
 
+# Look for a header override in the Settings file and use it if there.
+if hasattr(settings, 'HEADER') and settings.HEADER:
+    header_row = settings.HEADER
+else:
+    header_row = reader.header_row()
+
 while True:
     # Full path to the output file
     fn = f"{settings.FILE_PREFIX}_{datetime.now().strftime('%Y-%m-%d')}.csv"
@@ -50,7 +56,7 @@ while True:
     # If output file doesn't exist, create it with a header row.
     if not full_fn.exists():
         with open(full_fn, 'w') as fout:
-            fout.write(f"{reader.header_row()}\n")
+            fout.write(f"{header_row}\n")
     try:
         data_line = reader.read_data()
         if data_line:
